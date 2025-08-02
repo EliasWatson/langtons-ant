@@ -3,10 +3,16 @@ import { ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
 
 export function ControlPanel(): ReactNode {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
-    <div className="h-screen p-2 border-l border-gray-600 bg-gray-900 relative">
+    <div
+      className={clsx(
+        "transition-all h-screen",
+        open ? "w-64" : "w-0",
+        "relative",
+      )}
+    >
       <div
         className={clsx(
           "w-6 h-8",
@@ -21,7 +27,14 @@ export function ControlPanel(): ReactNode {
           className={clsx("transition-transform", !open && "-scale-x-100")}
         />
       </div>
-      Test
+      <div
+        className={clsx(
+          "w-64 h-screen absolute top-0 left-0 z-0 p-2",
+          "border-l border-gray-600 bg-gray-900",
+        )}
+      >
+        Test
+      </div>
     </div>
   );
 }
