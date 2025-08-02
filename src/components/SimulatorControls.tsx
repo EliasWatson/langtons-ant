@@ -16,7 +16,7 @@ export function SimulatorControls(): ReactNode {
   return (
     <div className="flex gap-2">
       <Tooltip delayDuration={500}>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Button onClick={togglePaused}>
             {paused ? <Play /> : <Pause />}
           </Button>
@@ -26,7 +26,7 @@ export function SimulatorControls(): ReactNode {
         </TooltipContent>
       </Tooltip>
       <Tooltip delayDuration={500}>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Button disabled={!paused} onClick={() => simulateSteps(1)}>
             <StepForward />
           </Button>
@@ -35,6 +35,7 @@ export function SimulatorControls(): ReactNode {
           <p>Step</p>
         </TooltipContent>
       </Tooltip>
+      <div className="grow" />
     </div>
   );
 }
