@@ -4,9 +4,12 @@ import { useSimulatorStore } from "./store.ts";
 import { ControlPanel } from "./components/ControlPanel.tsx";
 
 export default function App() {
+  const paused = useSimulatorStore((state) => state.paused);
   const simulateSteps = useSimulatorStore((state) => state.simulateSteps);
 
   useAnimationFrame(() => {
+    if (paused) return;
+
     simulateSteps(1);
   });
 

@@ -9,6 +9,8 @@ import type { Board } from "./simulator/board.ts";
 enableMapSet();
 
 type State = {
+  /** Whether the simulation is currently paused. */
+  paused: boolean;
   /** A map of cell coordinates to their colors. */
   board: Board;
   /** The ruleset currently being used in the simulator. */
@@ -18,11 +20,13 @@ type State = {
 };
 
 type Actions = {
+  togglePaused: () => void;
   simulateSteps: (steps: number) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
   immer((set) => ({
+    paused: false,
     board: new Map(),
     ruleset: rulesetPresets.langtons,
     ants: [
@@ -33,6 +37,10 @@ export const useSimulatorStore = create<State & Actions>()(
         currentState: rulesetPresets.langtons.initialState,
       },
     ],
+    togglePaused: () =>
+      set((state) => {
+        state.paused = !state.paused;
+      }),
     simulateSteps: (steps) =>
       set((state) => {
         for (let i = 0; i < steps; i++) {
