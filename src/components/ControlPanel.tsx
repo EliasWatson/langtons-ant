@@ -1,6 +1,12 @@
 import { type ReactNode, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion.tsx";
 
 export function ControlPanel(): ReactNode {
   const [open, setOpen] = useState(true);
@@ -29,11 +35,19 @@ export function ControlPanel(): ReactNode {
       </div>
       <div
         className={clsx(
-          "w-64 h-screen absolute top-0 left-0 z-0 p-2",
+          "w-64 h-screen absolute top-0 left-0 z-0 px-2",
           "border-l border-gray-600 bg-gray-900",
+          "flex flex-col",
         )}
       >
-        Test
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Is it accessible?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   );
