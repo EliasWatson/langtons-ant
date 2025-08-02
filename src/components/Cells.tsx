@@ -25,7 +25,7 @@ export function Cells(): ReactNode {
 
   const graphicsContext = useMemo(() => {
     const g = new GraphicsContext();
-    g.rect(-0.5, -0.5, 0.5, 0.5);
+    g.rect(-0.5, -0.5, 1, 1);
     // The color will be changed via tinting in the Graphics component.
     g.fill({ color: "white" });
     return g;

@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { Application } from "@pixi/react";
 import { SimulatorViewport } from "./SimulatorViewport.tsx";
 import { Cells } from "./Cells.tsx";
+import { Ants } from "./Ants.tsx";
 
 export function SimulatorCanvas(): ReactNode {
   return (
@@ -13,6 +14,7 @@ export function SimulatorCanvas(): ReactNode {
     >
       <SimulatorViewport>
         <Cells />
+        <Ants />
       </SimulatorViewport>
     </Application>
   );
