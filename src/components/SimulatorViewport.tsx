@@ -24,9 +24,10 @@ export function SimulatorViewport({
 
     viewportInstance.drag().pinch().wheel().decelerate();
 
+    viewportInstance.resize(renderer?.width, renderer?.height);
     viewportInstance.moveCenter({ x: 0, y: 0 });
     viewportInstance.setZoom(10);
-  }, [viewportInstance]);
+  }, [renderer?.height, renderer?.width, viewportInstance]);
 
   useTick(() => {
     if (!viewportInstance) return;
