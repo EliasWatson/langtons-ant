@@ -7,7 +7,7 @@ export default function App() {
   const simulateSteps = useSimulatorStore((state) => state.simulateSteps);
 
   useAnimationFrame(() => {
-    simulateSteps(10);
+    simulateSteps(1);
   });
 
   return (
