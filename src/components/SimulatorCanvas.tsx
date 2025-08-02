@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { Application } from "@pixi/react";
 import { SimulatorViewport } from "./SimulatorViewport.tsx";
-import { Cells } from "./Cells.tsx";
+import { Board } from "./Board.tsx";
 import { Ants } from "./Ants.tsx";
 
 export function SimulatorCanvas(): ReactNode {
@@ -13,7 +13,7 @@ export function SimulatorCanvas(): ReactNode {
       resolution={devicePixelRatio}
     >
       <SimulatorViewport>
-        <Cells />
+        <Board />
         <Ants />
       </SimulatorViewport>
     </Application>

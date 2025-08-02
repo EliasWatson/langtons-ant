@@ -25,7 +25,7 @@ export function SimulatorViewport({
     viewportInstance.drag().pinch().wheel().decelerate();
 
     viewportInstance.moveCenter({ x: 0, y: 0 });
-    viewportInstance.setZoom(50);
+    viewportInstance.setZoom(10);
   }, [viewportInstance]);
 
   return renderer ? (

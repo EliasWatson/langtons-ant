@@ -20,8 +20,8 @@ const cellColors = [
 
 extend({ Container, Graphics });
 
-export function Cells(): ReactNode {
-  const cells = useSimulatorStore((store) => store.cells);
+export function Board(): ReactNode {
+  const board = useSimulatorStore((store) => store.board);
 
   const graphicsContext = useMemo(() => {
     const g = new GraphicsContext();
@@ -33,7 +33,7 @@ export function Cells(): ReactNode {
 
   return (
     <pixiContainer interactive={false} interactiveChildren={false}>
-      {[...cells.entries()].flatMap(([y, row]) =>
+      {[...board.entries()].flatMap(([y, row]) =>
         [...row.entries()].map(([x, color]) => (
           <pixiGraphics
             key={`${x},${y}`}

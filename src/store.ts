@@ -3,13 +3,14 @@ import { immer } from "zustand/middleware/immer";
 import { enableMapSet } from "immer";
 import type { Ruleset } from "./simulator/ruleset.ts";
 import { rulesetPresets } from "./simulator/presets.ts";
-import type { Ant } from "./simulator/ant.ts";
+import { type Ant, simulateAntStep } from "./simulator/ant.ts";
+import type { Board } from "./simulator/board.ts";
 
 enableMapSet();
 
 type State = {
-  /** Cell color map, indexed by y first, then x. */
-  cells: Map<number, Map<number, number>>;
+  /** A map of cell coordinates to their colors. */
+  board: Board;
   /** The ruleset currently being used in the simulator. */
   ruleset: Ruleset;
   /** The ants currently in the simulator. */
@@ -17,15 +18,12 @@ type State = {
 };
 
 type Actions = {
-  /** Gets the color of a cell. */
-  getCellColor: (x: number, y: number) => number;
-  /** Sets the color of a cell. */
-  setCellColor: (x: number, y: number, color: number) => void;
+  simulateSteps: (steps: number) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
-  immer((set, get) => ({
-    cells: new Map(),
+  immer((set) => ({
+    board: new Map(),
     ruleset: rulesetPresets.langtons,
     ants: [
       {
@@ -35,24 +33,12 @@ export const useSimulatorStore = create<State & Actions>()(
         currentState: rulesetPresets.langtons.initialState,
       },
     ],
-    getCellColor: (x: number, y: number): number => {
-      return get().cells.get(y)?.get(x) ?? 0;
-    },
-    setCellColor: (x: number, y: number, color: number) =>
+    simulateSteps: (steps) =>
       set((state) => {
-        let row = state.cells.get(y);
-        if (!row) {
-          row = new Map();
-          state.cells.set(y, row);
-        }
-
-        if (color === 0) {
-          row.delete(x);
-          if (row.size === 0) {
-            state.cells.delete(y);
+        for (let i = 0; i < steps; i++) {
+          for (const ant of state.ants) {
+            simulateAntStep(state.ruleset, state.board, ant);
           }
-        } else {
-          row.set(x, color);
         }
       }),
   })),

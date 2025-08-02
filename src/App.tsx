@@ -1,12 +1,13 @@
 import { SimulatorCanvas } from "./components/SimulatorCanvas.tsx";
+import { useAnimationFrame } from "./util/use-animation-frame.ts";
 import { useSimulatorStore } from "./store.ts";
-import { useEffect } from "react";
 
 export default function App() {
-  const setCellColor = useSimulatorStore((store) => store.setCellColor);
-  useEffect(() => {
-    setCellColor(0, 0, 1);
-  }, [setCellColor]);
+  const simulateSteps = useSimulatorStore((state) => state.simulateSteps);
+
+  useAnimationFrame(() => {
+    simulateSteps(10);
+  });
 
   return (
     <div className="w-screen h-screen overflow-hidden">
