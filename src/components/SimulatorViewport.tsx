@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { Viewport } from "pixi-viewport";
-import { extend, useApplication } from "@pixi/react";
+import { extend, useApplication, useTick } from "@pixi/react";
 import type { Renderer } from "pixi.js";
 
 extend({ Viewport });
@@ -27,6 +27,12 @@ export function SimulatorViewport({
     viewportInstance.moveCenter({ x: 0, y: 0 });
     viewportInstance.setZoom(10);
   }, [viewportInstance]);
+
+  useTick(() => {
+    if (!viewportInstance) return;
+
+    viewportInstance.resize(app.renderer.width, app.renderer.height);
+  });
 
   return renderer ? (
     <viewport ref={setViewportInstance} events={renderer.events}>
