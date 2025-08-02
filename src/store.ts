@@ -1,12 +1,16 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { enableMapSet } from "immer";
+import type { Ruleset } from "./simulator/ruleset.ts";
+import { rulesetPresets } from "./simulator/presets.ts";
 
 enableMapSet();
 
 type State = {
   /** Cell color map, indexed by y first, then x. */
   cells: Map<number, Map<number, number>>;
+  /** The ruleset currently being used in the simulator. */
+  ruleset: Ruleset;
 };
 
 type Actions = {
@@ -19,6 +23,7 @@ type Actions = {
 export const useSimulatorStore = create<State & Actions>()(
   immer((set, get) => ({
     cells: new Map(),
+    ruleset: rulesetPresets.langtons,
     getCellColor: (x: number, y: number): number => {
       return get().cells.get(y)?.get(x) ?? 0;
     },
