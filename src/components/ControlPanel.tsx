@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion.tsx";
 import { SimulatorControls } from "@/components/SimulatorControls.tsx";
+import { RuleSetEditor } from "@/components/RuleSetEditor/RuleSetEditor.tsx";
 
 export function ControlPanel(): ReactNode {
   const [open, setOpen] = useState(true);
@@ -46,7 +47,9 @@ export function ControlPanel(): ReactNode {
         <Accordion type="multiple">
           <AccordionItem value="rules">
             <AccordionTrigger>Rules</AccordionTrigger>
-            <AccordionContent>TODO</AccordionContent>
+            <AccordionContent>
+              <RuleSetEditor />
+            </AccordionContent>
           </AccordionItem>
           <AccordionItem value="ants">
             <AccordionTrigger>Ants</AccordionTrigger>
