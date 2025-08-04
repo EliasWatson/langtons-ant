@@ -22,6 +22,7 @@ type State = {
 type Actions = {
   togglePaused: () => void;
   simulateSteps: (steps: number) => void;
+  reset: () => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
@@ -48,6 +49,18 @@ export const useSimulatorStore = create<State & Actions>()(
             simulateAntStep(state.ruleset, state.board, ant);
           }
         }
+      }),
+    reset: () =>
+      set((state) => {
+        state.board.clear();
+        state.ants = [
+          {
+            x: 0,
+            y: 0,
+            direction: "E",
+            currentState: state.ruleset.initialState,
+          },
+        ];
       }),
   })),
 );
