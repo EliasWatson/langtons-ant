@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useRef, useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import { Pause, Play, RotateCcw, StepForward } from "lucide-react";
 import { useSimulatorStore } from "@/store.ts";
@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
 import { Slider } from "@/components/ui/slider.tsx";
+import { useAnimationFrame } from "@/util/use-animation-frame.ts";
 
 export function SimulatorControls(): ReactNode {
   const paused = useSimulatorStore((state) => state.paused);
@@ -16,6 +17,22 @@ export function SimulatorControls(): ReactNode {
   const reset = useSimulatorStore((state) => state.reset);
   const stepsPerFrame = useSimulatorStore((state) => state.stepsPerFrame);
   const setStepsPerFrame = useSimulatorStore((state) => state.setStepsPerFrame);
+
+  const [fps, setFps] = useState(0);
+  const lastFrameTimeRef = useRef(0);
+  const lastFpsUpdateRef = useRef(0);
+  useAnimationFrame(() => {
+    const now = performance.now();
+    const deltaTime = now - lastFrameTimeRef.current;
+    lastFrameTimeRef.current = now;
+
+    if (paused) return;
+
+    if (now - lastFpsUpdateRef.current >= 250) {
+      setFps(Math.round(1000 / deltaTime));
+      lastFpsUpdateRef.current = now;
+    }
+  });
 
   return (
     <div className="flex flex-col gap-2">
@@ -56,6 +73,9 @@ export function SimulatorControls(): ReactNode {
         <div>Steps/frame</div>
         <div className="text-right">Steps/sec</div>
         <div>{stepsPerFrame}</div>
+        <div className="text-right">
+          {(fps * stepsPerFrame).toLocaleString()}
+        </div>
       </div>
       <Slider
         min={1}
