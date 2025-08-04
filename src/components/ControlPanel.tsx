@@ -42,12 +42,15 @@ export function ControlPanel(): ReactNode {
         )}
       >
         <SimulatorControls />
-        <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Is it accessible?</AccordionTrigger>
-            <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
-            </AccordionContent>
+        <hr className="mt-6" />
+        <Accordion type="multiple">
+          <AccordionItem value="rules">
+            <AccordionTrigger>Rules</AccordionTrigger>
+            <AccordionContent>TODO</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="ants">
+            <AccordionTrigger>Ants</AccordionTrigger>
+            <AccordionContent>TODO</AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
