@@ -71,42 +71,44 @@ export function RuleSetEditor(): ReactNode {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {Object.entries(stateRules).map(([colorKey, rule]) => (
-                <TableRow key={colorKey}>
-                  <TableCell>
-                    <div
-                      className="w-8 h-8 rounded border border-gray-500"
-                      style={{ background: cellColors[Number(colorKey)] }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <ColorEditor
-                      colorIndex={rule.writeColor}
-                      onColorChange={(newColor) =>
-                        updateRuleColor(stateKey, Number(colorKey), newColor)
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <MoveEditor
-                      move={rule.move}
-                      onMoveChange={(newMove) =>
-                        updateRuleMove(stateKey, Number(colorKey), newMove)
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="outline">{rule.nextState}</Button>
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        Place content for the popover here.
-                      </PopoverContent>
-                    </Popover>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {Object.entries(stateRules).map(([colorKey, rule]) =>
+                rule ? (
+                  <TableRow key={colorKey}>
+                    <TableCell>
+                      <div
+                        className="w-8 h-8 rounded border border-gray-500"
+                        style={{ background: cellColors[Number(colorKey)] }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <ColorEditor
+                        colorIndex={rule.writeColor}
+                        onColorChange={(newColor) =>
+                          updateRuleColor(stateKey, Number(colorKey), newColor)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <MoveEditor
+                        move={rule.move}
+                        onMoveChange={(newMove) =>
+                          updateRuleMove(stateKey, Number(colorKey), newMove)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline">{rule.nextState}</Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          Place content for the popover here.
+                        </PopoverContent>
+                      </Popover>
+                    </TableCell>
+                  </TableRow>
+                ) : null,
+              )}
             </TableBody>
           </Table>
         </div>

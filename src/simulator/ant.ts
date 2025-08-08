@@ -25,6 +25,7 @@ export function simulateAntStep(
 
   const currentColor = getCellColor(board, ant.x, ant.y);
   const command = ruleset.states[ant.currentState][currentColor];
+  if (!command) return;
 
   setCellColor(board, ant.x, ant.y, command.writeColor);
   ant.currentState = `${command.nextState}`;

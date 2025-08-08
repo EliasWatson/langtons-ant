@@ -37,6 +37,6 @@ export type Command = z.infer<typeof commandSchema>;
 export const rulesetSchema = z.object({
   name: z.string(),
   initialState: z.string(),
-  states: z.record(z.string(), z.array(commandSchema)),
+  states: z.record(z.string(), z.array(commandSchema.nullable())),
 });
 export type Ruleset = z.infer<typeof rulesetSchema>;
