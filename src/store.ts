@@ -90,6 +90,33 @@ export const useSimulatorStore = create<State & Actions>()(
         if (stateRules && stateRules[colorIndex]) {
           stateRules[colorIndex].writeColor = newColor;
         }
+
+        const referencedColors = getReferencedColors(state);
+        const maxColorIndex = Math.max(...referencedColors);
+        for (const stateKey of Object.keys(state.ruleset.states)) {
+          const rules = state.ruleset.states[stateKey];
+          while (rules.length <= maxColorIndex) {
+            rules.push(null);
+          }
+          for (const color of referencedColors) {
+            rules[color] ??= {
+              writeColor: color,
+              move: "N",
+              nextState: stateKey,
+            };
+          }
+        }
       }),
   })),
 );
+
+function getReferencedColors(state: State): number[] {
+  return Array.from(
+    new Set<number>(
+      Object.values(state.ruleset.states)
+        .flat()
+        .map((rule) => rule?.writeColor)
+        .filter((color): color is number => color !== undefined),
+    ),
+  );
+}
