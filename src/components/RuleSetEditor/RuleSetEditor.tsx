@@ -29,10 +29,10 @@ export function RuleSetEditor(): ReactNode {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Input Color</TableHead>
-                <TableHead>Output Color</TableHead>
+                <TableHead>When</TableHead>
+                <TableHead>Write</TableHead>
                 <TableHead>Move</TableHead>
-                <TableHead>Next State</TableHead>
+                <TableHead>State</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
