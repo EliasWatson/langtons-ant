@@ -16,6 +16,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip.tsx";
 
 export function RuleSetEditor(): ReactNode {
   const ruleset = useSimulatorStore((state) => state.ruleset);
@@ -29,10 +34,38 @@ export function RuleSetEditor(): ReactNode {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>When</TableHead>
-                <TableHead>Write</TableHead>
-                <TableHead>Move</TableHead>
-                <TableHead>State</TableHead>
+                <TableHead>
+                  <Tooltip delayDuration={500}>
+                    <TooltipTrigger>When</TooltipTrigger>
+                    <TooltipContent>
+                      <p>When on this color, do these actions</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TableHead>
+                <TableHead>
+                  <Tooltip delayDuration={500}>
+                    <TooltipTrigger>Write</TooltipTrigger>
+                    <TooltipContent>
+                      <p>Write this color to the current cell</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TableHead>
+                <TableHead>
+                  <Tooltip delayDuration={500}>
+                    <TooltipTrigger>Move</TooltipTrigger>
+                    <TooltipContent>
+                      <p>Perform this movement</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TableHead>
+                <TableHead>
+                  <Tooltip delayDuration={500}>
+                    <TooltipTrigger>State</TooltipTrigger>
+                    <TooltipContent>
+                      <p>Switch to this state</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
