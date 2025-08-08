@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button.tsx";
 import { MoveEditor } from "@/components/RuleSetEditor/MoveEditor.tsx";
+import { ColorEditor } from "@/components/RuleSetEditor/ColorEditor.tsx";
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ import {
 export function RuleSetEditor(): ReactNode {
   const ruleset = useSimulatorStore((state) => state.ruleset);
   const updateRuleMove = useSimulatorStore((state) => state.updateRuleMove);
+  const updateRuleColor = useSimulatorStore((state) => state.updateRuleColor);
 
   return (
     <div className="flex flex-col gap-6">
@@ -78,9 +80,11 @@ export function RuleSetEditor(): ReactNode {
                     />
                   </TableCell>
                   <TableCell>
-                    <div
-                      className="w-8 h-8 rounded border border-gray-500"
-                      style={{ background: cellColors[rule.writeColor] }}
+                    <ColorEditor
+                      colorIndex={rule.writeColor}
+                      onColorChange={(newColor) =>
+                        updateRuleColor(stateKey, Number(colorKey), newColor)
+                      }
                     />
                   </TableCell>
                   <TableCell>

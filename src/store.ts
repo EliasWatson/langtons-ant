@@ -31,6 +31,11 @@ type Actions = {
     colorIndex: number,
     newMove: MoveCommand,
   ) => void;
+  updateRuleColor: (
+    stateKey: string,
+    colorIndex: number,
+    newColor: number,
+  ) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
@@ -77,6 +82,13 @@ export const useSimulatorStore = create<State & Actions>()(
         const stateRules = state.ruleset.states[stateKey];
         if (stateRules && stateRules[colorIndex]) {
           stateRules[colorIndex].move = newMove;
+        }
+      }),
+    updateRuleColor: (stateKey, colorIndex, newColor) =>
+      set((state) => {
+        const stateRules = state.ruleset.states[stateKey];
+        if (stateRules && stateRules[colorIndex]) {
+          stateRules[colorIndex].writeColor = newColor;
         }
       }),
   })),
