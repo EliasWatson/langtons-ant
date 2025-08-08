@@ -11,6 +11,7 @@ import { MoveEditor } from "@/components/RuleSetEditor/MoveEditor.tsx";
 
 export function RuleSetEditor(): ReactNode {
   const ruleset = useSimulatorStore((state) => state.ruleset);
+  const updateRuleMove = useSimulatorStore((state) => state.updateRuleMove);
 
   return (
     <div className="flex flex-col">
@@ -29,7 +30,12 @@ export function RuleSetEditor(): ReactNode {
                   className="w-8 h-8 rounded border border-gray-500"
                   style={{ background: cellColors[rule.writeColor] }}
                 />
-                <MoveEditor move={rule.move} />
+                <MoveEditor
+                  move={rule.move}
+                  onMoveChange={(newMove) =>
+                    updateRuleMove(stateKey, Number(colorKey), newMove)
+                  }
+                />
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button>{rule.nextState}</Button>

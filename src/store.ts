@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { enableMapSet } from "immer";
-import type { Ruleset } from "./simulator/ruleset.ts";
+import type { Ruleset, MoveCommand } from "./simulator/ruleset.ts";
 import { rulesetPresets } from "./simulator/presets.ts";
 import { type Ant, simulateAntStep } from "./simulator/ant.ts";
 import type { Board } from "./simulator/board.ts";
@@ -26,6 +26,11 @@ type Actions = {
   setStepsPerFrame: (steps: number) => void;
   simulateSteps: (steps: number) => void;
   reset: () => void;
+  updateRuleMove: (
+    stateKey: string,
+    colorIndex: number,
+    newMove: MoveCommand,
+  ) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
@@ -66,6 +71,13 @@ export const useSimulatorStore = create<State & Actions>()(
             currentState: state.ruleset.initialState,
           },
         ];
+      }),
+    updateRuleMove: (stateKey, colorIndex, newMove) =>
+      set((state) => {
+        const stateRules = state.ruleset.states[stateKey];
+        if (stateRules && stateRules[colorIndex]) {
+          stateRules[colorIndex].move = newMove;
+        }
       }),
   })),
 );
