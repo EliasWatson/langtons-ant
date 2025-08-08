@@ -1,7 +1,31 @@
 import { z } from "zod";
 
-const moveCommandSchema = z.enum(["L", "R", "U", "N", "S", "<", ">", "v", "^"]);
+export const moveCommands = [
+  "L",
+  "R",
+  "U",
+  "N",
+  "S",
+  "<",
+  ">",
+  "v",
+  "^",
+] as const;
+
+const moveCommandSchema = z.enum(moveCommands);
 export type MoveCommand = z.infer<typeof moveCommandSchema>;
+
+export const moveNames: Record<string, string> = {
+  L: "Turn Left",
+  R: "Turn Right",
+  U: "U-Turn",
+  N: "No Turn",
+  S: "Stay",
+  "<": "Move Left",
+  ">": "Move Right",
+  v: "Move Down",
+  "^": "Move Up",
+};
 
 const commandSchema = z.object({
   writeColor: z.number(),

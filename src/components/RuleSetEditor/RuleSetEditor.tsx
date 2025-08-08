@@ -1,6 +1,13 @@
 import { Fragment, type ReactNode } from "react";
 import { useSimulatorStore } from "@/store.ts";
 import { cellColors } from "@/util/colors.ts";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button.tsx";
+import { MoveEditor } from "@/components/RuleSetEditor/MoveEditor.tsx";
 
 export function RuleSetEditor(): ReactNode {
   const ruleset = useSimulatorStore((state) => state.ruleset);
@@ -22,8 +29,15 @@ export function RuleSetEditor(): ReactNode {
                   className="w-8 h-8 rounded border border-gray-500"
                   style={{ background: cellColors[rule.writeColor] }}
                 />
-                <div>{rule.move}</div>
-                <div>{rule.nextState}</div>
+                <MoveEditor move={rule.move} />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button>{rule.nextState}</Button>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    Place content for the popover here.
+                  </PopoverContent>
+                </Popover>
               </Fragment>
             ))}
           </div>
