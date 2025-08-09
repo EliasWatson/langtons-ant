@@ -22,16 +22,23 @@ import { Input } from "@/components/ui/input.tsx";
 import { Plus } from "lucide-react";
 
 export function RuleSetEditor(): ReactNode {
-  const [newStateName, setNewStateName] = useState("");
   const ruleset = useSimulatorStore((state) => state.ruleset);
   const updateRuleMove = useSimulatorStore((state) => state.updateRuleMove);
   const updateRuleColor = useSimulatorStore((state) => state.updateRuleColor);
   const updateRuleState = useSimulatorStore((state) => state.updateRuleState);
   const createNewState = useSimulatorStore((state) => state.createNewState);
 
+  const [newStateName, setNewStateName] = useState("");
+
+  let defaultNewStateIndex = Object.keys(ruleset.states).length;
+  while (ruleset.states[`${defaultNewStateIndex}`]) {
+    defaultNewStateIndex++;
+  }
+
   const handleCreateState = () => {
-    if (newStateName.trim() && !ruleset.states[newStateName.trim()]) {
-      createNewState(newStateName.trim());
+    const name = newStateName.trim() || `${defaultNewStateIndex}`;
+    if (name && !ruleset.states[name]) {
+      createNewState(name);
       setNewStateName("");
     }
   };
@@ -124,7 +131,7 @@ export function RuleSetEditor(): ReactNode {
         <div className="flex gap-2">
           <Input
             type="text"
-            placeholder="Enter state name"
+            placeholder={`${defaultNewStateIndex}`}
             value={newStateName}
             onChange={(e) => setNewStateName(e.target.value)}
             onKeyDown={(e) => {
@@ -136,7 +143,7 @@ export function RuleSetEditor(): ReactNode {
           <Button
             onClick={handleCreateState}
             disabled={
-              !newStateName.trim() || !!ruleset.states[newStateName.trim()]
+              !!newStateName.trim() && !!ruleset.states[newStateName.trim()]
             }
           >
             <Plus />
