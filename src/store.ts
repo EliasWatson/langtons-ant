@@ -36,6 +36,7 @@ type Actions = {
     colorIndex: number,
     newColor: number,
   ) => void;
+  setRulesetPreset: (presetKey: keyof typeof rulesetPresets) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
@@ -106,6 +107,19 @@ export const useSimulatorStore = create<State & Actions>()(
             };
           }
         }
+      }),
+    setRulesetPreset: (presetKey) =>
+      set((state) => {
+        state.ruleset = rulesetPresets[presetKey];
+        state.board.clear();
+        state.ants = [
+          {
+            x: 0,
+            y: 0,
+            direction: "E",
+            currentState: rulesetPresets[presetKey].initialState,
+          },
+        ];
       }),
   })),
 );
