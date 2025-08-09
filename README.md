@@ -1,69 +1,65 @@
-# React + TypeScript + Vite
+# Langton's Ant Simulator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a high-performance Langton's Ant cellular automaton simulator built with React, TypeScript, and PIXI.js. It provides an interactive environment to explore the emergent behavior of Langton's Ant and its variations.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **High-Performance Rendering**: Uses PIXI.js to render large grids with thousands of ants smoothly.
+- **Customizable Rulesets**: Create your own rules for the ant's behavior, extending beyond the classic black/white rules.
+- **Interactive Viewport**: Pan and zoom the simulation grid to explore the patterns up close or from a distance.
+- **Simulation Controls**: Play, pause, reset, and control the speed of the simulation.
+- **Preset Rules**: Comes with a few preset rules to get you started.
 
-## Expanding the ESLint configuration
+## Technology Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: React 19, TypeScript, Vite
+- **Rendering**: PIXI.js with `@pixi/react` wrapper
+- **State Management**: Zustand with Immer middleware for efficient and immutable state updates.
+- **Styling**: Tailwind CSS v4
+- **UI Components**: Radix UI primitives for accessible and unstyled components.
+- **Validation**: Zod for runtime validation of custom rulesets.
 
-```js
-export default tseslint.config([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+- Node.js (v18 or later recommended)
+- pnpm package manager
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Installation and Running
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/langtons-ant-react.git
+    cd langtons-ant-react
+    ```
 
-export default tseslint.config([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+2.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
+
+3.  **Run the development server:**
+    ```bash
+    pnpm dev
+    ```
+    The application will be available at `http://localhost:5173`.
+
+## Development Commands
+
+- `pnpm dev`: Start the development server with hot reload.
+- `pnpm build`: Build the application for production. This includes a TypeScript check.
+- `pnpm preview`: Preview the production build locally.
+- `pnpm lint`: Run ESLint to check for code quality issues.
+- `pnpm prettier`: Format the code using Prettier.
+
+## Architecture Overview
+
+The application is structured to separate the simulation logic from the UI components.
+
+- **`src/simulator`**: Contains the core logic for the simulation, including the ant's behavior, the board state, and the rulesets.
+- **`src/components`**: Contains the React components for the UI, including the control panel, the ruleset editor, and the PIXI.js-based rendering components.
+- **`src/store.ts`**: The Zustand store manages the entire application state, including the simulation state, board data, and ant entities.
+- **Rendering**: The `SimulatorCanvas.tsx` component wraps the PIXI.js application. The `Board.tsx` and `Ants.tsx` components render the grid and the ants, respectively. The `useAnimationFrame` hook drives the simulation loop.
+
+This project was generated from a template and completed by the Claude Code developer agent.
