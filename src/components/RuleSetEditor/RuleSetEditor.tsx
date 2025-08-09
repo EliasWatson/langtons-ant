@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/tooltip.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Plus } from "lucide-react";
 
 export function RuleSetEditor(): ReactNode {
   const [newStateName, setNewStateName] = useState("");
@@ -37,30 +38,6 @@ export function RuleSetEditor(): ReactNode {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <h3 className="font-medium text-lg">Create New State</h3>
-        <div className="flex gap-2">
-          <Input
-            type="text"
-            placeholder="Enter state name"
-            value={newStateName}
-            onChange={(e) => setNewStateName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleCreateState();
-              }
-            }}
-          />
-          <Button
-            onClick={handleCreateState}
-            disabled={
-              !newStateName.trim() || !!ruleset.states[newStateName.trim()]
-            }
-          >
-            Add State
-          </Button>
-        </div>
-      </div>
       {Object.entries(ruleset.states).map(([stateKey, stateRules]) => (
         <div key={stateKey} className="flex flex-col">
           <h3 className="font-medium text-lg">State: {stateKey}</h3>
@@ -142,6 +119,30 @@ export function RuleSetEditor(): ReactNode {
           </Table>
         </div>
       ))}
+      <div className="flex flex-col gap-2">
+        <h3 className="font-medium text-lg">Create New State</h3>
+        <div className="flex gap-2">
+          <Input
+            type="text"
+            placeholder="Enter state name"
+            value={newStateName}
+            onChange={(e) => setNewStateName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleCreateState();
+              }
+            }}
+          />
+          <Button
+            onClick={handleCreateState}
+            disabled={
+              !newStateName.trim() || !!ruleset.states[newStateName.trim()]
+            }
+          >
+            <Plus />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
