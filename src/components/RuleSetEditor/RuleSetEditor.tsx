@@ -95,7 +95,7 @@ export function RuleSetEditor(): ReactNode {
                     </TooltipContent>
                   </Tooltip>
                 </TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead />
               </TableRow>
             </TableHeader>
             <TableBody>
