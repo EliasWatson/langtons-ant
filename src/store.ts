@@ -42,6 +42,7 @@ type Actions = {
     newState: string,
   ) => void;
   setRulesetPreset: (presetKey: keyof typeof rulesetPresets) => void;
+  createNewState: (stateName: string) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
@@ -132,6 +133,40 @@ export const useSimulatorStore = create<State & Actions>()(
             currentState: rulesetPresets[presetKey].initialState,
           },
         ];
+      }),
+    createNewState: (stateName) =>
+      set((state) => {
+        if (state.ruleset.states[stateName]) {
+          return;
+        }
+
+        const referencedColors = getReferencedColors(state);
+        const defaultRules =
+          referencedColors.length > 0
+            ? referencedColors.map((color) => ({
+                writeColor: color,
+                move: "N" as MoveCommand,
+                nextState: stateName,
+              }))
+            : [
+                {
+                  writeColor: 0,
+                  move: "N" as MoveCommand,
+                  nextState: stateName,
+                },
+              ];
+
+        const maxColorIndex = Math.max(...referencedColors, 0);
+        const rules = new Array(maxColorIndex + 1).fill(null);
+        defaultRules.forEach((rule, index) => {
+          if (referencedColors.length > 0) {
+            rules[referencedColors[index]] = rule;
+          } else {
+            rules[0] = rule;
+          }
+        });
+
+        state.ruleset.states[stateName] = rules;
       }),
   })),
 );

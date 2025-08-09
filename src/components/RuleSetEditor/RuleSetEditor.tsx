@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { useSimulatorStore } from "@/store.ts";
 import { cellColors } from "@/util/colors.ts";
 import { MoveEditor } from "@/components/RuleSetEditor/MoveEditor.tsx";
@@ -17,15 +17,50 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { Input } from "@/components/ui/input.tsx";
 
 export function RuleSetEditor(): ReactNode {
+  const [newStateName, setNewStateName] = useState("");
   const ruleset = useSimulatorStore((state) => state.ruleset);
   const updateRuleMove = useSimulatorStore((state) => state.updateRuleMove);
   const updateRuleColor = useSimulatorStore((state) => state.updateRuleColor);
   const updateRuleState = useSimulatorStore((state) => state.updateRuleState);
+  const createNewState = useSimulatorStore((state) => state.createNewState);
+
+  const handleCreateState = () => {
+    if (newStateName.trim() && !ruleset.states[newStateName.trim()]) {
+      createNewState(newStateName.trim());
+      setNewStateName("");
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <h3 className="font-medium text-lg">Create New State</h3>
+        <div className="flex gap-2">
+          <Input
+            type="text"
+            placeholder="Enter state name"
+            value={newStateName}
+            onChange={(e) => setNewStateName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleCreateState();
+              }
+            }}
+          />
+          <Button
+            onClick={handleCreateState}
+            disabled={
+              !newStateName.trim() || !!ruleset.states[newStateName.trim()]
+            }
+          >
+            Add State
+          </Button>
+        </div>
+      </div>
       {Object.entries(ruleset.states).map(([stateKey, stateRules]) => (
         <div key={stateKey} className="flex flex-col">
           <h3 className="font-medium text-lg">State: {stateKey}</h3>
