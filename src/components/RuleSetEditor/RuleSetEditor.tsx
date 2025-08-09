@@ -25,9 +25,9 @@ export function RuleSetEditor(): ReactNode {
   const updateRuleState = useSimulatorStore((state) => state.updateRuleState);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       {Object.entries(ruleset.states).map(([stateKey, stateRules]) => (
-        <div key={stateKey} className="flex flex-col gap-4">
+        <div key={stateKey} className="flex flex-col">
           <h3 className="font-medium text-lg">State: {stateKey}</h3>
           <Table>
             <TableHeader>
