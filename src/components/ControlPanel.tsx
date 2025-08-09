@@ -2,11 +2,11 @@ import { type ReactNode, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { clsx } from "clsx";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion.tsx";
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/ui/tabs.tsx";
 import { SimulatorControls } from "@/components/SimulatorControls.tsx";
 import { RuleControls } from "@/components/RuleControls.tsx";
 
@@ -44,18 +44,18 @@ export function ControlPanel(): ReactNode {
       >
         <SimulatorControls />
         <hr className="mt-6" />
-        <Accordion type="multiple">
-          <AccordionItem value="rules">
-            <AccordionTrigger>Rules</AccordionTrigger>
-            <AccordionContent>
-              <RuleControls />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="ants">
-            <AccordionTrigger>Ants</AccordionTrigger>
-            <AccordionContent>TODO</AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <Tabs defaultValue="rules" className="flex-1">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="rules">Rules</TabsTrigger>
+            <TabsTrigger value="ants">Ants</TabsTrigger>
+          </TabsList>
+          <TabsContent value="rules" className="mt-4">
+            <RuleControls />
+          </TabsContent>
+          <TabsContent value="ants" className="mt-4">
+            TODO
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
