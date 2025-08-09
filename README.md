@@ -61,5 +61,3 @@ The application is structured to separate the simulation logic from the UI compo
 - **`src/components`**: Contains the React components for the UI, including the control panel, the ruleset editor, and the PIXI.js-based rendering components.
 - **`src/store.ts`**: The Zustand store manages the entire application state, including the simulation state, board data, and ant entities.
 - **Rendering**: The `SimulatorCanvas.tsx` component wraps the PIXI.js application. The `Board.tsx` and `Ants.tsx` components render the grid and the ants, respectively. The `useAnimationFrame` hook drives the simulation loop.
-
-This project was generated from a template and completed by the Claude Code developer agent.
