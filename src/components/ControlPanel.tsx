@@ -39,7 +39,7 @@ export function ControlPanel(): ReactNode {
         className={clsx(
           "w-64 h-screen absolute top-0 left-0 z-0 p-2",
           "border-l border-gray-600 bg-gray-900",
-          "flex flex-col",
+          "flex flex-col overflow-y-auto",
         )}
       >
         <SimulatorControls />
