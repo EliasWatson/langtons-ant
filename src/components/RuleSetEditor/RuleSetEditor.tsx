@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/tooltip.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 
 export function RuleSetEditor(): ReactNode {
   const ruleset = useSimulatorStore((state) => state.ruleset);
@@ -27,6 +27,7 @@ export function RuleSetEditor(): ReactNode {
   const updateRuleColor = useSimulatorStore((state) => state.updateRuleColor);
   const updateRuleState = useSimulatorStore((state) => state.updateRuleState);
   const createNewState = useSimulatorStore((state) => state.createNewState);
+  const deleteState = useSimulatorStore((state) => state.deleteState);
 
   const [newStateName, setNewStateName] = useState("");
 
@@ -47,7 +48,17 @@ export function RuleSetEditor(): ReactNode {
     <div className="flex flex-col gap-4">
       {Object.entries(ruleset.states).map(([stateKey, stateRules]) => (
         <div key={stateKey} className="flex flex-col">
-          <h3 className="font-medium text-lg">State: {stateKey}</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="font-medium text-lg">State: {stateKey}</h3>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => deleteState(stateKey)}
+              disabled={Object.keys(ruleset.states).length <= 1}
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
           <Table>
             <TableHeader>
               <TableRow>

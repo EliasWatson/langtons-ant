@@ -43,6 +43,7 @@ type Actions = {
   ) => void;
   setRulesetPreset: (presetKey: keyof typeof rulesetPresets) => void;
   createNewState: (stateName: string) => void;
+  deleteState: (stateName: string) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
@@ -167,6 +168,36 @@ export const useSimulatorStore = create<State & Actions>()(
         });
 
         state.ruleset.states[stateName] = rules;
+      }),
+    deleteState: (stateName) =>
+      set((state) => {
+        if (!state.ruleset.states[stateName]) {
+          return;
+        }
+
+        delete state.ruleset.states[stateName];
+
+        for (const stateKey of Object.keys(state.ruleset.states)) {
+          const stateRules = state.ruleset.states[stateKey];
+          for (let i = 0; i < stateRules.length; i++) {
+            const rule = stateRules[i];
+            if (rule && rule.nextState === stateName) {
+              rule.nextState = -1;
+            }
+          }
+        }
+
+        if (state.ruleset.initialState === stateName) {
+          const remainingStates = Object.keys(state.ruleset.states);
+          state.ruleset.initialState =
+            remainingStates.length > 0 ? remainingStates[0] : "-1";
+        }
+
+        for (const ant of state.ants) {
+          if (ant.currentState === stateName) {
+            ant.currentState = state.ruleset.initialState;
+          }
+        }
       }),
   })),
 );
