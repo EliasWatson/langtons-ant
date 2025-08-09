@@ -14,9 +14,10 @@ export function RuleControls(): ReactNode {
   const ruleset = useSimulatorStore((state) => state.ruleset);
   const setRulesetPreset = useSimulatorStore((state) => state.setRulesetPreset);
 
-  const currentPresetKey = Object.entries(rulesetPresets).find(
-    ([, preset]) => preset === ruleset
-  )?.[0] || "";
+  const currentPresetKey =
+    Object.entries(rulesetPresets).find(
+      ([, preset]) => preset === ruleset,
+    )?.[0] || "";
 
   return (
     <div className="flex flex-col gap-6">

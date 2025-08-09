@@ -31,12 +31,14 @@ Based on https://github.com/MaxRobinsonTheGreat/turmites
 ### Installation and Running
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/your-username/langtons-ant-react.git
     cd langtons-ant-react
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     pnpm install
     ```
