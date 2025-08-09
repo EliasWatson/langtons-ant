@@ -36,6 +36,11 @@ type Actions = {
     colorIndex: number,
     newColor: number,
   ) => void;
+  updateRuleState: (
+    stateKey: string,
+    colorIndex: number,
+    newState: string,
+  ) => void;
   setRulesetPreset: (presetKey: keyof typeof rulesetPresets) => void;
 };
 
@@ -106,6 +111,13 @@ export const useSimulatorStore = create<State & Actions>()(
               nextState: stateKey,
             };
           }
+        }
+      }),
+    updateRuleState: (stateKey, colorIndex, newState) =>
+      set((state) => {
+        const stateRules = state.ruleset.states[stateKey];
+        if (stateRules && stateRules[colorIndex]) {
+          stateRules[colorIndex].nextState = newState;
         }
       }),
     setRulesetPreset: (presetKey) =>

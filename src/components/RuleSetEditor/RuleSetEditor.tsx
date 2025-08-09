@@ -1,14 +1,9 @@
 import { type ReactNode } from "react";
 import { useSimulatorStore } from "@/store.ts";
 import { cellColors } from "@/util/colors.ts";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button.tsx";
 import { MoveEditor } from "@/components/RuleSetEditor/MoveEditor.tsx";
 import { ColorEditor } from "@/components/RuleSetEditor/ColorEditor.tsx";
+import { StateEditor } from "@/components/RuleSetEditor/StateEditor.tsx";
 import {
   Table,
   TableBody,
@@ -27,6 +22,7 @@ export function RuleSetEditor(): ReactNode {
   const ruleset = useSimulatorStore((state) => state.ruleset);
   const updateRuleMove = useSimulatorStore((state) => state.updateRuleMove);
   const updateRuleColor = useSimulatorStore((state) => state.updateRuleColor);
+  const updateRuleState = useSimulatorStore((state) => state.updateRuleState);
 
   return (
     <div className="flex flex-col gap-6">
@@ -97,14 +93,13 @@ export function RuleSetEditor(): ReactNode {
                       />
                     </TableCell>
                     <TableCell>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button variant="outline">{rule.nextState}</Button>
-                        </PopoverTrigger>
-                        <PopoverContent>
-                          Place content for the popover here.
-                        </PopoverContent>
-                      </Popover>
+                      <StateEditor
+                        currentState={rule.nextState}
+                        availableStates={Object.keys(ruleset.states)}
+                        onStateChange={(newState) =>
+                          updateRuleState(stateKey, Number(colorKey), newState)
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                 ) : null,
