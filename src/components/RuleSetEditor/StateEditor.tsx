@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useMemo } from "react";
 import {
   Select,
   SelectContent,
@@ -6,18 +6,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select.tsx";
+import { useSimulatorStore } from "@/store.ts";
 
 export type StateEditorProps = {
   currentState: string | number;
-  availableStates: string[];
   onStateChange?: (state: string) => void;
 };
 
 export function StateEditor({
   currentState,
-  availableStates,
   onStateChange,
 }: StateEditorProps): ReactNode {
+  const ruleset = useSimulatorStore((state) => state.ruleset);
+  const availableStates = useMemo(
+    () => ["-1", ...Object.keys(ruleset.states)],
+    [ruleset.states],
+  );
+
   return (
     <Select
       value={String(currentState)}

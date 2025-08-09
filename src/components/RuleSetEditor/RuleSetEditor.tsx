@@ -95,7 +95,6 @@ export function RuleSetEditor(): ReactNode {
                     <TableCell>
                       <StateEditor
                         currentState={rule.nextState}
-                        availableStates={Object.keys(ruleset.states)}
                         onStateChange={(newState) =>
                           updateRuleState(stateKey, Number(colorKey), newState)
                         }
