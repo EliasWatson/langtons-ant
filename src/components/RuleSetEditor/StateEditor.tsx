@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
-import { useState } from "react";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover.tsx";
-import { Button } from "@/components/ui/button.tsx";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select.tsx";
 
 export type StateEditorProps = {
   currentState: string | number;
@@ -18,31 +18,21 @@ export function StateEditor({
   availableStates,
   onStateChange,
 }: StateEditorProps): ReactNode {
-  const [open, setOpen] = useState(false);
-
-  const handleStateSelect = (selectedState: string) => {
-    onStateChange?.(selectedState);
-    setOpen(false);
-  };
-
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button variant="outline">{String(currentState)}</Button>
-      </PopoverTrigger>
-      <PopoverContent>
-        <div className="flex flex-col gap-2">
-          {availableStates.map((state) => (
-            <Button
-              key={state}
-              variant={state === String(currentState) ? "default" : "outline"}
-              onClick={() => handleStateSelect(state)}
-            >
-              {state}
-            </Button>
-          ))}
-        </div>
-      </PopoverContent>
-    </Popover>
+    <Select
+      value={String(currentState)}
+      onValueChange={(value) => onStateChange?.(value)}
+    >
+      <SelectTrigger>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {availableStates.map((state) => (
+          <SelectItem key={state} value={state}>
+            {state}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }
