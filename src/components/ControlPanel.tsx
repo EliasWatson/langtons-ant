@@ -43,8 +43,7 @@ export function ControlPanel(): ReactNode {
         )}
       >
         <SimulatorControls />
-        <hr className="mt-6" />
-        <Tabs defaultValue="rules" className="flex-1">
+        <Tabs defaultValue="rules" className="mt-6 flex-1">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="rules">Rules</TabsTrigger>
             <TabsTrigger value="ants">Ants</TabsTrigger>
