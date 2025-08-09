@@ -28,6 +28,7 @@ export function RuleSetEditor(): ReactNode {
   const updateRuleState = useSimulatorStore((state) => state.updateRuleState);
   const createNewState = useSimulatorStore((state) => state.createNewState);
   const deleteState = useSimulatorStore((state) => state.deleteState);
+  const deleteRule = useSimulatorStore((state) => state.deleteRule);
 
   const [newStateName, setNewStateName] = useState("");
 
@@ -94,6 +95,7 @@ export function RuleSetEditor(): ReactNode {
                     </TooltipContent>
                   </Tooltip>
                 </TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -129,6 +131,15 @@ export function RuleSetEditor(): ReactNode {
                           updateRuleState(stateKey, Number(colorKey), newState)
                         }
                       />
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => deleteRule(stateKey, Number(colorKey))}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ) : null,

@@ -44,6 +44,7 @@ type Actions = {
   setRulesetPreset: (presetKey: keyof typeof rulesetPresets) => void;
   createNewState: (stateName: string) => void;
   deleteState: (stateName: string) => void;
+  deleteRule: (stateKey: string, colorIndex: number) => void;
 };
 
 export const useSimulatorStore = create<State & Actions>()(
@@ -197,6 +198,13 @@ export const useSimulatorStore = create<State & Actions>()(
           if (ant.currentState === stateName) {
             ant.currentState = state.ruleset.initialState;
           }
+        }
+      }),
+    deleteRule: (stateKey, colorIndex) =>
+      set((state) => {
+        const stateRules = state.ruleset.states[stateKey];
+        if (stateRules && stateRules[colorIndex]) {
+          stateRules[colorIndex] = null;
         }
       }),
   })),
