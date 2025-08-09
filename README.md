@@ -2,6 +2,8 @@
 
 This is a high-performance Langton's Ant cellular automaton simulator built with React, TypeScript, and PIXI.js. It provides an interactive environment to explore the emergent behavior of Langton's Ant and its variations.
 
+Based on https://github.com/MaxRobinsonTheGreat/turmites
+
 ## Features
 
 - **High-Performance Rendering**: Uses PIXI.js to render large grids with thousands of ants smoothly.
